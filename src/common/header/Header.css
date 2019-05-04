@@ -17,3 +17,11 @@
  @keyframes app-logo-spin {
     from { transform: scaleX(-1); }
  }
+
+ #FormControl{
+     padding:5px;
+ }
+
+ .tabs{
+     margin-bottom: 20px;
+ }
