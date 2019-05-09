@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './Home.css';
 import Header from '../../common/header/Header';
+import Details from '../details/Details';
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from '../../common/movieData';
 import genres from '../../common/genres';
@@ -18,6 +20,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItemText from '@material-ui/core/ListItemText';
+import { TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -75,6 +79,15 @@ class Home extends Component {
     artistSelectHandler = event => {
         this.setState({ artists: event.target.value });
     }
+
+    applyFilterClickHandler = () => {
+
+    }
+    
+    movieClickHandler = (movieId) => {
+        ReactDOM.render(<Details movieId={movieId} />, document.getElementById('root'));
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -95,7 +108,7 @@ class Home extends Component {
                     <div className="left">
                         <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
                             {moviesData.map(movie => (
-                                <GridListTile className="released-movie-grid-item" key={"grid" + movie.id}>
+                                <GridListTile onClick={() => this.movieClickHandler(movie.id)} className="released-movie-grid-item" key={"grid" + movie.id}>
                                     <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
                                     <GridListTileBar
                                         title={movie.title}
@@ -153,6 +166,26 @@ class Home extends Component {
                                         ))}
                                     </Select>
                                 </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <TextField 
+                                        id="releaseDateStart"
+                                        label="Release Date Start"
+                                        type="Date"
+                                        defaultValue=""
+                                        InputLabelProps={{shrink:true}}
+                                    />
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <TextField 
+                                        id="releaseDateTo"
+                                        label="Release Date To"
+                                        type="Date"
+                                        defaultValue=""
+                                        InputLabelProps={{shrink:true}}
+                                    />
+                                </FormControl>
+                                <br/><br/>
+                                <Button variant="contained" color="primary" onClick={this.applyFilterClickHandler} className={classes.formControl}>Apply</Button>
                             </CardContent>
                         </Card>
                     </div>
